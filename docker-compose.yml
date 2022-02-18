@@ -1,0 +1,23 @@
+version: '3.2'
+
+services:
+  telegraf:
+    image: telegraf
+    container_name: telegraf-sflow
+    restart: always
+#    command: --config $INFLUX_CONFIG
+    environment:
+      - INFLUX_URL
+      - INFLUX_ORG
+      - INFLUX_BUCKET
+      - INFLUX_TOKEN
+#      - INFLUX_CONFIG
+      - PROMETHEUS_URL
+    ports:
+      - "6343:6343/udp"
+    volumes:
+      - type: bind
+        source: ./telegraf.conf
+        target: /etc/telegraf/telegraf.conf
+        read_only: true
+
